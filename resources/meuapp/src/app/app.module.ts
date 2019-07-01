@@ -17,33 +17,41 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PostComponent } from './post/post.component';
+import { PostDialogComponent } from './post-dialog/post-dialog.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PostComponent,
+  AppComponent,
+  PostComponent,
+  PostDialogComponent,
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule, 
-    ReactiveFormsModule,
-    FlexLayoutModule,
-    HttpClientModule,
+  BrowserModule,
+  BrowserAnimationsModule,
+  FormsModule, 
+  ReactiveFormsModule,
+  FlexLayoutModule,
+  HttpClientModule,
 
-    MatButtonModule,
-    MatInputModule,
-    MatSelectModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatChipsModule,
-    MatBadgeModule,
+  MatButtonModule,
+  MatInputModule,
+  MatSelectModule,
+  MatIconModule,
+  MatToolbarModule,
+  MatCardModule,
+  MatDividerModule,
+  MatDialogModule,
+  MatChipsModule,
+  MatBadgeModule,
 
   ],
+
+  entryComponents: [
+  PostDialogComponent
+  
+  ],
+
   providers: [
     
   ],
