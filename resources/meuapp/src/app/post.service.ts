@@ -48,4 +48,13 @@ export class PostService {
 		})
 	}
 
+	like(id: number){
+		this.http.get('/api/like/'+id)
+		.subscribe(
+			(event: any) => {
+			let p = this.posts.find( (p) => p.id == id) //p é um objeto post , verificando se nosso array de posts possui um post com o id recebid viaparametro
+			p.likes = event.likes
+		})
+	}
+
 }

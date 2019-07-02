@@ -52,7 +52,7 @@ module.exports = "<div>\n\t<div fxLayout=\"column\" fxLayoutAlign=\"space-around
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<mat-card fxFlex class=\"card\">\n  <mat-card-header>\n    <div mat-card-avatar></div>\n    <mat-card-title>{{ post.titulo }}</mat-card-title>\n    <mat-card-subtitle>{{ post.subtitulo }}</mat-card-subtitle>\n  </mat-card-header>\n  <img mat-card-image src=\"/storage/{{post.arquivo}}\" alt=\"Photo of a Shiba Inu\">\n  <mat-card-content>\n    <p>\n    {{ post.mensagem }}\n    </p>\n  </mat-card-content>\n  <mat-card-actions>\n    <button mat-button>LIKE</button>\n    <button mat-button>DELETAR</button>\n  </mat-card-actions>\n</mat-card>"
+module.exports = "\n<mat-card fxFlex class=\"card\">\n  <mat-card-header>\n    <div mat-card-avatar></div>\n    <mat-card-title>{{ post.titulo }}</mat-card-title>\n    <mat-card-subtitle>{{ post.subtitulo }}</mat-card-subtitle>\n  </mat-card-header>\n  <img mat-card-image src=\"/storage/{{post.arquivo}}\" alt=\"Photo of a Shiba Inu\">\n  <mat-card-content>\n    <p>\n    {{ post.mensagem }}\n    </p>\n  </mat-card-content>\n  <mat-card-actions>\n    <button mat-button color=\"primary\" (click)=\"like()\">LIKE</button>\n    <mat-icon color=\"warn\" *ngIf=\"post.likes>0\" [matBadge]=\"post.likes\" \n      matBadgePosition=\"above after\" matBadgeColor=\"warn\" matBadgeOverlap=\"false\">favorite</mat-icon>\n    <button mat-button>DELETAR</button>\n  </mat-card-actions>\n</mat-card>"
 
 /***/ }),
 
@@ -347,6 +347,14 @@ var PostService = /** @class */ (function () {
             }
         });
     };
+    PostService.prototype.like = function (id) {
+        var _this = this;
+        this.http.get('/api/like/' + id)
+            .subscribe(function (event) {
+            var p = _this.posts.find(function (p) { return p.id == id; }); //p é um objeto post , verificando se nosso array de posts possui um post com o id recebid viaparametro
+            p.likes = event.likes;
+        });
+    };
     PostService.ctorParameters = function () { return [
         { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
     ]; };
@@ -423,13 +431,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PostComponent", function() { return PostComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _post_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../post.service */ "./src/app/post.service.ts");
+
 
 
 var PostComponent = /** @class */ (function () {
-    function PostComponent() {
+    function PostComponent(postService) {
+        this.postService = postService;
     }
     PostComponent.prototype.ngOnInit = function () {
     };
+    PostComponent.prototype.like = function () {
+        this.postService.like(this.post.id);
+    };
+    PostComponent.ctorParameters = function () { return [
+        { type: _post_service__WEBPACK_IMPORTED_MODULE_2__["PostService"] }
+    ]; };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
     ], PostComponent.prototype, "post", void 0);
