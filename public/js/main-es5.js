@@ -52,7 +52,7 @@ module.exports = "<div>\n\t<div fxLayout=\"column\" fxLayoutAlign=\"space-around
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<mat-card fxFlex class=\"card\">\n  <mat-card-header>\n    <div mat-card-avatar></div>\n    <mat-card-title>{{ post.titulo }}</mat-card-title>\n    <mat-card-subtitle>{{ post.subtitulo }}</mat-card-subtitle>\n  </mat-card-header>\n  <img mat-card-image src=\"/storage/{{post.arquivo}}\" alt=\"Photo of a Shiba Inu\">\n  <mat-card-content>\n    <p>\n    {{ post.mensagem }}\n    </p>\n  </mat-card-content>\n  <mat-card-actions>\n    <button mat-button color=\"primary\" (click)=\"like()\">LIKE</button>\n    <mat-icon color=\"warn\" *ngIf=\"post.likes>0\" [matBadge]=\"post.likes\" \n      matBadgePosition=\"above after\" matBadgeColor=\"warn\" matBadgeOverlap=\"false\">favorite</mat-icon>\n    <button mat-button>DELETAR</button>\n  </mat-card-actions>\n</mat-card>"
+module.exports = "\n<mat-card fxFlex class=\"card\">\n  <mat-card-header>\n    <div mat-card-avatar></div>\n    <mat-card-title>{{ post.titulo }}</mat-card-title>\n    <mat-card-subtitle>{{ post.subtitulo }}</mat-card-subtitle>\n  </mat-card-header>\n  <img mat-card-image src=\"/storage/{{post.arquivo}}\" alt=\"Photo of a Shiba Inu\">\n  <mat-card-content>\n    <p>\n    {{ post.mensagem }}\n    </p>\n  </mat-card-content>\n  <mat-card-actions>\n    <button mat-button color=\"primary\" (click)=\"like()\">LIKE</button>\n    <mat-icon color=\"warn\" *ngIf=\"post.likes>0\" [matBadge]=\"post.likes\" \n      matBadgePosition=\"above after\" matBadgeColor=\"warn\" matBadgeOverlap=\"false\">favorite</mat-icon>\n    <button mat-button color=\"accent\" (click)=\"apagar()\">DELETAR</button>\n  </mat-card-actions>\n</mat-card>"
 
 /***/ }),
 
@@ -355,6 +355,16 @@ var PostService = /** @class */ (function () {
             p.likes = event.likes;
         });
     };
+    PostService.prototype.apagar = function (id) {
+        var _this = this;
+        this.http.delete('/api/' + id)
+            .subscribe(function (event) {
+            var i = _this.posts.findIndex(function (p) { return p.id == id; }); // retorna o index do objeto post cuja p id é recebido via parametro
+            if (i >= 0) {
+                _this.posts.splice(i, 1);
+            }
+        });
+    };
     PostService.ctorParameters = function () { return [
         { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
     ]; };
@@ -443,6 +453,9 @@ var PostComponent = /** @class */ (function () {
     };
     PostComponent.prototype.like = function () {
         this.postService.like(this.post.id);
+    };
+    PostComponent.prototype.apagar = function () {
+        this.postService.apagar(this.post.id);
     };
     PostComponent.ctorParameters = function () { return [
         { type: _post_service__WEBPACK_IMPORTED_MODULE_2__["PostService"] }

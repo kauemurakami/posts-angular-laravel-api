@@ -15,6 +15,6 @@
     <button mat-button color="primary" (click)="like()">LIKE</button>
     <mat-icon color="warn" *ngIf="post.likes>0" [matBadge]="post.likes" 
       matBadgePosition="above after" matBadgeColor="warn" matBadgeOverlap="false">favorite</mat-icon>
-    <button mat-button>DELETAR</button>
+    <button mat-button color="accent" (click)="apagar()">DELETAR</button>
   </mat-card-actions>
 </mat-card>

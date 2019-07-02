@@ -57,4 +57,15 @@ export class PostService {
 		})
 	}
 
+	apagar(id: number){
+		this.http.delete('/api/'+id)
+		.subscribe(
+			(event) => {
+			let i = this.posts.findIndex((p) => p.id == id) // retorna o index do objeto post cuja p id é recebido via parametro
+			if(i >= 0){
+				this.posts.splice(i, 1) // splice retira o objeto com o id recebido do array de posts, e automaticamente retirando do front end
+			}
+		})
+	}
+
 }

@@ -8,5 +8,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/', 'PostControlador@index');
 Route::post('/', 'PostControlador@store');
-Route::delete('/', 'PostControlador@destroy');
+Route::delete('/{id}', 'PostControlador@destroy');
 Route::get('/like/{id}', 'PostControlador@like');

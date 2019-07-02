@@ -19,5 +19,8 @@ export class PostComponent implements OnInit {
   like(){
   	this.postService.like(this.post.id)
   }
+  apagar(){
+  	this.postService.apagar(this.post.id)
+  }
 
 }
