@@ -29,7 +29,7 @@ export class AppComponent {
     dialogRef.afterClosed().subscribe(
       result => {
         if(result){
-          console.log(result)
+          this.postService.salvar(result.post, result.arquivo)
         }
       })
   }
